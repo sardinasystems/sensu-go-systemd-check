@@ -7,6 +7,8 @@ import (
 	"github.com/sensu-community/sensu-plugin-sdk/sensu"
 	"github.com/sensu/sensu-go/types"
 	"go.uber.org/multierr"
+
+	"github.com/sardinasystems/sensu-go-systemd-check/service"
 )
 
 // Config represents the check plugin config.
@@ -56,7 +58,7 @@ func executeCheck(event *types.Event) (int, error) {
 	}
 	defer conn.Close()
 
-	unitFetcher, err := instrospectForUnitMethods()
+	unitFetcher, err := service.InstrospectForUnitMethods()
 	if err != nil {
 		return sensu.CheckStateUnknown, fmt.Errorf("could not introspect systemd dbus: %w", err)
 	}
@@ -69,7 +71,7 @@ func executeCheck(event *types.Event) (int, error) {
 	if len(unitStats) < len(plugin.UnitPatterns) {
 		err = nil
 		for _, unit := range plugin.UnitPatterns {
-			matched, err := matchUnitPatterns([]string{unit}, unitStats)
+			matched, err := service.MatchUnitPatterns([]string{unit}, unitStats)
 			if err != nil {
 				fmt.Printf("CRITICAL: %s: match error: %v\n", unit, err)
 				err = multierr.Append(err, fmt.Errorf("%s: match error: %w", unit, err))

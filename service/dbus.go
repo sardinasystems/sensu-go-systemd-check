@@ -17,7 +17,7 @@
 
 //+build !netbsd
 
-package main
+package service
 
 import (
 	"encoding/xml"
@@ -32,12 +32,12 @@ import (
 	"github.com/pkg/errors"
 )
 
-type unitFetcher func(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error)
+type UnitFetcher func(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error)
 
-// instrospectForUnitMethods determines what methods are available via dbus for listing systemd units.
+// InstrospectForUnitMethods determines what methods are available via dbus for listing systemd units.
 // We have a number of functions, some better than others, for getting and filtering unit lists.
 // This will attempt to find the most optimal method, and move down to methods that require more work.
-func instrospectForUnitMethods() (unitFetcher, error) {
+func InstrospectForUnitMethods() (UnitFetcher, error) {
 	//setup a dbus connection
 	conn, err := dbusRaw.SystemBusPrivate()
 	if err != nil {
@@ -130,7 +130,7 @@ func listUnitsFilteredWrapper(conn *dbus.Conn, states, patterns []string) ([]dbu
 		return nil, errors.Wrap(err, "ListUnitsFiltered error")
 	}
 
-	return matchUnitPatterns(patterns, units)
+	return MatchUnitPatterns(patterns, units)
 }
 
 // listUnitsWrapper wraps the dbus ListUnits method
@@ -140,7 +140,7 @@ func listUnitsWrapper(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitSt
 		return nil, errors.Wrap(err, "ListUnits error")
 	}
 	if len(patterns) > 0 {
-		units, err = matchUnitPatterns(patterns, units)
+		units, err = MatchUnitPatterns(patterns, units)
 		if err != nil {
 			return nil, errors.Wrap(err, "error matching unit patterns")
 		}
@@ -162,9 +162,9 @@ func listUnitsWrapper(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitSt
 	return units, nil
 }
 
-// matchUnitPatterns returns a list of units that match the pattern list.
+// MatchUnitPatterns returns a list of units that match the pattern list.
 // This algo, including filepath.Match, is designed to (somewhat) emulate the behavior of ListUnitsByPatterns, which uses `fnmatch`.
-func matchUnitPatterns(patterns []string, units []dbus.UnitStatus) ([]dbus.UnitStatus, error) {
+func MatchUnitPatterns(patterns []string, units []dbus.UnitStatus) ([]dbus.UnitStatus, error) {
 	var matchUnits []dbus.UnitStatus
 	for _, unit := range units {
 		for _, pattern := range patterns {
