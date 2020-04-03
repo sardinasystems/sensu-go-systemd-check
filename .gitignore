@@ -19,3 +19,4 @@ vendor/
 # deploy
 bonsai/
 dist/
+sensu-go-systemd-check
