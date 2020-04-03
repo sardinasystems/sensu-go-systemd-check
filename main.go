@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/coreos/go-systemd/v22/dbus"
 	"github.com/sensu-community/sensu-plugin-sdk/sensu"
@@ -13,7 +12,8 @@ import (
 // Config represents the check plugin config.
 type Config struct {
 	sensu.PluginConfig
-	Units []string
+	Units           []string
+	UseByNameSearch bool
 }
 
 var (
@@ -21,7 +21,7 @@ var (
 		PluginConfig: sensu.PluginConfig{
 			Name:     "sensu-go-systemd-check",
 			Short:    "check for systemd service aliveness via dbus",
-			Keyspace: "sensu.io/plugins/sensu-go-systemd-check/config",
+			Keyspace: "sensu.io/plugins/systemd/config",
 		},
 	}
 
@@ -33,6 +33,15 @@ var (
 			Shorthand: "s",
 			Usage:     "Systemd unit(s) to check",
 			Value:     &plugin.Units,
+		},
+		&sensu.PluginConfigOption{
+			Path:      "use_by_name_search",
+			Env:       "SYSTEMD_USE_BY_NAME_SEARCH",
+			Argument:  "by-name",
+			Shorthand: "n",
+			Usage:     "use by name search (use with systemd > 230)",
+			Value:     &plugin.UseByNameSearch,
+			Default:   false,
 		},
 	}
 )
@@ -67,10 +76,17 @@ func executeCheck(event *types.Event) (int, error) {
 	}
 	defer conn.Close()
 
-	unitStats, err := conn.ListUnitsByNames(plugin.Units)
+	var unitStats []dbus.UnitStatus
+
+	if plugin.UseByNameSearch {
+		unitStats, err = conn.ListUnitsByNames(plugin.Units)
+	} else {
+		unitStats, err = conn.ListUnitsByPatterns(nil, plugin.Units)
+	}
 	if err != nil {
 		return sensu.CheckStateUnknown, fmt.Errorf("list units error: %w", err)
 	}
+
 	if len(unitStats) < len(plugin.Units) {
 		err = nil
 		foundUnits := make([]string, 0, len(unitStats))
@@ -79,24 +95,33 @@ func executeCheck(event *types.Event) (int, error) {
 		}
 		for _, unit := range plugin.Units {
 			if !ssContains(unit, foundUnits) {
+				fmt.Printf("CRITICAL: %s: not present\n", unit)
 				err = multierr.Append(err, fmt.Errorf("%s: not present", unit))
 			}
 		}
 
-		return sensu.CheckStateCritical, err
+		//return sensu.CheckStateCritical, err
+		return sensu.CheckStateCritical, nil
 	}
 
+	err = nil
 	for _, unit := range unitStats {
-		log.Printf("%s: %v\n", unit.Name, unit)
-
 		if unit.ActiveState != "active" {
-			return sensu.CheckStateCritical, fmt.Errorf("%s: active: %s", unit.Name, unit.ActiveState)
+			fmt.Printf("CRITICAL: %s: active: %s\n", unit.Name, unit.ActiveState)
+			err = multierr.Append(err, fmt.Errorf("%s: active: %s", unit.Name, unit.ActiveState))
+			continue
 		}
 		if unit.SubState != "running" {
-			return sensu.CheckStateCritical, fmt.Errorf("%s: sub: %s", unit.Name, unit.SubState)
+			fmt.Printf("CRITICAL: %s: sub: %s\n", unit.Name, unit.SubState)
+			err = multierr.Append(err, fmt.Errorf("%s: sub: %s", unit.Name, unit.SubState))
+			continue
 		}
 
-		log.Printf("%s: OK\n", unit.Name)
+		fmt.Printf("OK: %s: active and running\n", unit.Name)
+	}
+	if err != nil {
+		//return sensu.CheckStateCritical, err
+		return sensu.CheckStateCritical, nil
 	}
 
 	return sensu.CheckStateOK, nil
