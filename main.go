@@ -11,27 +11,27 @@ import (
 // Config represents the check plugin config.
 type Config struct {
 	sensu.PluginConfig
-	Example string
+	Units []string
 }
 
 var (
 	plugin = Config{
 		PluginConfig: sensu.PluginConfig{
-			Name:     "{{ .GithubProject }}",
-			Short:    "{{ .Description }}",
-			Keyspace: "sensu.io/plugins/{{ .GithubProject }}/config",
+			Name:     "sensu-go-systemd-check",
+			Short:    "check for systemd service aliveness via dbus",
+			Keyspace: "sensu.io/plugins/sensu-go-systemd-check/config",
 		},
 	}
 
-	options := []*sensu.PluginConfigOption{
+	options = []*sensu.PluginConfigOption{
 		&sensu.PluginConfigOption{
-			Path:      "example",
-			Env:       "CHECK_EXAMPLE",
-			Argument:  "example",
-			Shorthand: "e",
+			Path:      "unit",
+			Env:       "SYSTEMD_UNIT",
+			Argument:  "unit",
+			Shorthand: "s",
 			Default:   "",
-			Usage:     "An example string configuration option",
-			Value:     &plugin.Example,
+			Usage:     "Systemd unit(s) to check",
+			Value:     &plugin.Units,
 		},
 	}
 )
@@ -42,13 +42,14 @@ func main() {
 }
 
 func checkArgs(event *types.Event) (int, error) {
-	if len(plugin.Example) == 0 {
-		return sensu.CheckStateWarning, fmt.Errorf("--example or CHECK_EXAMPLE environment variable is required")
+	if len(plugin.Units) == 0 {
+		return sensu.CheckStateWarning, fmt.Errorf("--unit or SYSTEMD_UNIT environment variable is required")
 	}
+
 	return sensu.CheckStateOK, nil
 }
 
 func executeCheck(event *types.Event) (int, error) {
-	log.Println("executing check with --example", checkOptions.Example)
+	log.Println("executing check with --example", plugin.Units)
 	return sensu.CheckStateOK, nil
 }
