@@ -12,8 +12,7 @@ import (
 // Config represents the check plugin config.
 type Config struct {
 	sensu.PluginConfig
-	Units           []string
-	UseByNameSearch bool
+	UnitPatterns []string
 }
 
 var (
@@ -31,17 +30,8 @@ var (
 			Env:       "SYSTEMD_UNIT",
 			Argument:  "unit",
 			Shorthand: "s",
-			Usage:     "Systemd unit(s) to check",
-			Value:     &plugin.Units,
-		},
-		&sensu.PluginConfigOption{
-			Path:      "use_by_name_search",
-			Env:       "SYSTEMD_USE_BY_NAME_SEARCH",
-			Argument:  "by-name",
-			Shorthand: "n",
-			Usage:     "use by name search (use with systemd > 230)",
-			Value:     &plugin.UseByNameSearch,
-			Default:   false,
+			Usage:     "Systemd unit(s) pattern to check",
+			Value:     &plugin.UnitPatterns,
 		},
 	}
 )
@@ -51,18 +41,8 @@ func main() {
 	check.Execute()
 }
 
-func ssContains(s string, ss []string) bool {
-	for _, sl := range ss {
-		if s == sl {
-			return true
-		}
-	}
-
-	return false
-}
-
 func checkArgs(event *types.Event) (int, error) {
-	if len(plugin.Units) == 0 {
+	if len(plugin.UnitPatterns) == 0 {
 		return sensu.CheckStateWarning, fmt.Errorf("--unit or SYSTEMD_UNIT environment variable is required")
 	}
 
@@ -76,25 +56,25 @@ func executeCheck(event *types.Event) (int, error) {
 	}
 	defer conn.Close()
 
-	var unitStats []dbus.UnitStatus
-
-	if plugin.UseByNameSearch {
-		unitStats, err = conn.ListUnitsByNames(plugin.Units)
-	} else {
-		unitStats, err = conn.ListUnitsByPatterns(nil, plugin.Units)
+	unitFetcher, err := instrospectForUnitMethods()
+	if err != nil {
+		return sensu.CheckStateUnknown, fmt.Errorf("could not introspect systemd dbus: %w", err)
 	}
+
+	unitStats, err := unitFetcher(conn, nil, plugin.UnitPatterns)
 	if err != nil {
 		return sensu.CheckStateUnknown, fmt.Errorf("list units error: %w", err)
 	}
 
-	if len(unitStats) < len(plugin.Units) {
+	if len(unitStats) < len(plugin.UnitPatterns) {
 		err = nil
-		foundUnits := make([]string, 0, len(unitStats))
-		for _, unit := range unitStats {
-			foundUnits = append(foundUnits, unit.Name)
-		}
-		for _, unit := range plugin.Units {
-			if !ssContains(unit, foundUnits) {
+		for _, unit := range plugin.UnitPatterns {
+			matched, err := matchUnitPatterns([]string{unit}, unitStats)
+			if err != nil {
+				fmt.Printf("CRITICAL: %s: match error: %v\n", unit, err)
+				err = multierr.Append(err, fmt.Errorf("%s: match error: %w", unit, err))
+			}
+			if len(matched) == 0 {
 				fmt.Printf("CRITICAL: %s: not present\n", unit)
 				err = multierr.Append(err, fmt.Errorf("%s: not present", unit))
 			}
