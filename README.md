@@ -28,10 +28,10 @@ consider doing so! If you're using sensuctl 5.13 with Sensu Backend 5.13 or late
 following command to add the asset:
 
 ```
-sensuctl asset add {{ .GithubUser }}/{{ .GithubProject }}
+sensuctl asset add sardinasystems/sensu-go-systemd-check
 ```
 
-If you're using an earlier version of sensuctl, you can find the asset on the [Bonsai Asset Index][https://bonsai.sensu.io/assets/{{ .GithubUser }}/{{ .GithubProject }}].
+If you're using an earlier version of sensuctl, you can find the asset on the [Bonsai Asset Index][https://bonsai.sensu.io/assets/sardinasystems/sensu-go-systemd-check].
 
 ### Resource definition
 
