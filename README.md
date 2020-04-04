@@ -14,10 +14,17 @@
 ## Overview
 
 The sensu-go-systemd-check is a [Sensu Check][6] that checks for the status of provided unit(s).
+Uses DBUS API instead of parsing systemctl output (see [systemd#83](https://github.com/systemd/systemd/issues/83)).
 
 ## Files
 
+- sensu-go-systemd-check
+
 ## Usage examples
+
+```
+sensu-go-systemd-check -s dbus.service -s syncthing@*.service
+```
 
 ## Configuration
 
