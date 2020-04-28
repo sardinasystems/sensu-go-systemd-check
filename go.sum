@@ -226,8 +226,6 @@ github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFR
 github.com/russross/blackfriday v1.5.2/go.mod h1:JO/DiYxRf+HjHt06OyowR9PTA263kcR/rfWxYHBV53g=
 github.com/russross/blackfriday/v2 v2.0.1/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
 github.com/schollz/progressbar/v2 v2.13.2/go.mod h1:6YZjqdthH6SCZKv2rqGryrxPtfmRB/DWZxSMfCXPyD8=
-github.com/sensu-community/sensu-plugin-sdk v0.6.0 h1:ahYErlo3yfN7AlkkGX3TH1854hNXJ00MgUIW0sHaI3M=
-github.com/sensu-community/sensu-plugin-sdk v0.6.0/go.mod h1:Qkxx5GWZ99Hc5O6nZfBj4bNYjIDR8Qv2qobR3LSYAyA=
 github.com/sensu-community/sensu-plugin-sdk v0.6.1 h1:oTDWHUKxr2oQR/vc8AtyrqFdCVCwAgfgImtaSv4N98I=
 github.com/sensu-community/sensu-plugin-sdk v0.6.1/go.mod h1:Qkxx5GWZ99Hc5O6nZfBj4bNYjIDR8Qv2qobR3LSYAyA=
 github.com/sensu/lasr v1.2.1/go.mod h1:VIMtIK67Bcef6dTfctRCBg8EY9M9TtCY9NEFT6Zw5xQ=
