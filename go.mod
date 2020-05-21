@@ -13,7 +13,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/robertkrimen/otto v0.0.0-20191219234010-c382bd3c16ff // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
-	github.com/sensu-community/sensu-plugin-sdk v0.6.1
+	github.com/sensu-community/sensu-plugin-sdk v0.6.2
 	github.com/sensu/sensu-go v0.0.0-20200131164840-40b1d5938251
 	github.com/sirupsen/logrus v1.5.0 // indirect
 	github.com/spf13/cobra v0.0.7 // indirect
