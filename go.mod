@@ -11,13 +11,8 @@ require (
 	github.com/mitchellh/mapstructure v1.3.1 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
 	github.com/pkg/errors v0.9.1
-	github.com/robertkrimen/otto v0.0.0-20191219234010-c382bd3c16ff // indirect
-	github.com/robfig/cron/v3 v3.0.1 // indirect
-	github.com/sensu-community/sensu-plugin-sdk v0.6.2
+	github.com/sensu-community/sensu-plugin-sdk v0.7.0
 	github.com/sensu/sensu-go v0.0.0-20200131164840-40b1d5938251
-	github.com/sirupsen/logrus v1.6.0 // indirect
-	github.com/spf13/cobra v1.0.0 // indirect
-	github.com/spf13/viper v1.7.0 // indirect
 	go.uber.org/multierr v1.5.0
 	golang.org/x/net v0.0.0-20200520182314-0ba52f642ac2 // indirect
 	golang.org/x/sys v0.0.0-20200523222454-059865788121 // indirect
