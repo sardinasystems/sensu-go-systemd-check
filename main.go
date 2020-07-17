@@ -118,12 +118,12 @@ func executeCheck(event *types.Event) (int, error) {
 
 	err = nil
 	for _, unit := range unitStats {
-		if stringsContains(plugin.ExpectedActiveStates, unit.ActiveState) {
+		if !stringsContains(plugin.ExpectedActiveStates, unit.ActiveState) {
 			fmt.Printf("CRITICAL: %s: active: %s\n", unit.Name, unit.ActiveState)
 			err = multierr.Append(err, fmt.Errorf("%s: active: %s", unit.Name, unit.ActiveState))
 			continue
 		}
-		if stringsContains(plugin.ExpectedSubStates, unit.SubState) {
+		if !stringsContains(plugin.ExpectedSubStates, unit.SubState) {
 			fmt.Printf("CRITICAL: %s: sub: %s\n", unit.Name, unit.SubState)
 			err = multierr.Append(err, fmt.Errorf("%s: sub: %s", unit.Name, unit.SubState))
 			continue
