@@ -24,6 +24,8 @@ Uses DBUS API instead of parsing systemctl output (see [systemd#83](https://gith
 
 ```
 sensu-go-systemd-check -s dbus.service -s syncthing@*.service
+sensu-go-systemd-check -s sync.path --sub waiting --sub running
+sensu-go-systemd-check -s tftp.socket --sub listening
 ```
 
 ## Configuration

@@ -14,7 +14,9 @@ import (
 // Config represents the check plugin config.
 type Config struct {
 	sensu.PluginConfig
-	UnitPatterns []string
+	UnitPatterns         []string
+	ExpectedActiveStates []string
+	ExpectedSubStates    []string
 }
 
 var (
@@ -27,13 +29,31 @@ var (
 	}
 
 	options = []*sensu.PluginConfigOption{
-		&sensu.PluginConfigOption{
+		{
 			Path:      "unit",
 			Env:       "SYSTEMD_UNIT",
 			Argument:  "unit",
 			Shorthand: "s",
 			Usage:     "Systemd unit(s) pattern to check",
 			Value:     &plugin.UnitPatterns,
+		},
+		{
+			Path:      "active_state",
+			Env:       "SYSTEMD_ACTIVE_STATE",
+			Argument:  "active",
+			Shorthand: "a",
+			Usage:     "Expected systemd unit(s) active state(s)",
+			Value:     &plugin.ExpectedActiveStates,
+			Default:   []string{"active"},
+		},
+		{
+			Path:      "sub_state",
+			Env:       "SYSTEMD_SUB_STATE",
+			Argument:  "sub",
+			Shorthand: "b",
+			Usage:     "Expected systemd unit(s) sub state(s)",
+			Value:     &plugin.ExpectedSubStates,
+			Default:   []string{"running"},
 		},
 	}
 )
@@ -49,6 +69,16 @@ func checkArgs(event *types.Event) (int, error) {
 	}
 
 	return sensu.CheckStateOK, nil
+}
+
+func stringsContains(sl []string, s string) bool {
+	for _, ss := range sl {
+		if s == ss {
+			return true
+		}
+	}
+
+	return false
 }
 
 func executeCheck(event *types.Event) (int, error) {
@@ -88,18 +118,18 @@ func executeCheck(event *types.Event) (int, error) {
 
 	err = nil
 	for _, unit := range unitStats {
-		if unit.ActiveState != "active" {
+		if stringsContains(plugin.ExpectedActiveStates, unit.ActiveState) {
 			fmt.Printf("CRITICAL: %s: active: %s\n", unit.Name, unit.ActiveState)
 			err = multierr.Append(err, fmt.Errorf("%s: active: %s", unit.Name, unit.ActiveState))
 			continue
 		}
-		if unit.SubState != "running" {
+		if stringsContains(plugin.ExpectedSubStates, unit.SubState) {
 			fmt.Printf("CRITICAL: %s: sub: %s\n", unit.Name, unit.SubState)
 			err = multierr.Append(err, fmt.Errorf("%s: sub: %s", unit.Name, unit.SubState))
 			continue
 		}
 
-		fmt.Printf("OK: %s: active and running\n", unit.Name)
+		fmt.Printf("OK: %s: %s and %s\n", unit.Name, unit.ActiveState, unit.SubState)
 	}
 	if err != nil {
 		//return sensu.CheckStateCritical, err
