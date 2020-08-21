@@ -3,7 +3,6 @@ module github.com/sardinasystems/sensu-go-systemd-check
 go 1.13
 
 require (
-	github.com/coreos/etcd v3.3.22+incompatible // indirect
 	github.com/coreos/go-systemd/v22 v22.1.0
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/godbus/dbus v4.1.0+incompatible
@@ -12,9 +11,8 @@ require (
 	github.com/mitchellh/mapstructure v1.3.2 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
 	github.com/pkg/errors v0.9.1
-	github.com/sensu-community/sensu-plugin-sdk v0.7.0
-	github.com/sensu/sensu-go/api/core/v2 v2.1.0 // indirect
-	github.com/sensu/sensu-go/types v0.2.1
+	github.com/sensu-community/sensu-plugin-sdk v0.8.1
+	github.com/sensu/sensu-go/types v0.3.0
 	github.com/spf13/afero v1.3.2 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
