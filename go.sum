@@ -240,6 +240,7 @@ github.com/sensu/sensu-go/types v0.1.0 h1:1xB7nsPM6H0j+sDV6MTJTRrUqCZK1DN4zsn8tQ
 github.com/sensu/sensu-go/types v0.1.0/go.mod h1:o3tBPy2BUWb3jPvMQ+pBs0CgCyN1vC1/loN4anURxvs=
 github.com/sensu/sensu-go/types v0.2.1 h1:JORYkU09Nk/mS4aqjbl8L3dtl4ET9Bxmavp9zf4qFrQ=
 github.com/sensu/sensu-go/types v0.2.1/go.mod h1:o3tBPy2BUWb3jPvMQ+pBs0CgCyN1vC1/loN4anURxvs=
+github.com/sensu/sensu-go/types v0.3.0 h1:nVplWvduq9ArIu2rz3jMrzdVBFAlkm6T9l45UyhrP1s=
 github.com/sensu/sensu-go/types v0.3.0/go.mod h1:TyeO3h/82XE1KppZRFg+jKB4QYwY2hE5hbCzjnnGdRo=
 github.com/sensu/sensu-licensing v0.1.2 h1:EEZxvbj/pmCCfD4ePAzs9mb6k6IPRDbUJcwAOfSvuUc=
 github.com/sensu/sensu-licensing v0.1.2/go.mod h1:Xfs4do2c3U+VvuNCjthUH7QJOZ9o6NfbQSb7rrvSXGc=
