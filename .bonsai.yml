@@ -31,4 +31,5 @@
     sha_filename: "#{repo}_#{version}_sha512-checksums.txt"
     filter:
     -  "entity.system.os == 'linux'"
-    -  "entity.system.arch == 'armv7'"
+    -  "entity.system.arch == 'arm'"
+    -  "entity.system.arm_version == 7"
