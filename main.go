@@ -99,16 +99,15 @@ func executeCheck(event *types.Event) (int, error) {
 	}
 
 	if len(unitStats) < len(plugin.UnitPatterns) {
-		err = nil
 		for _, unit := range plugin.UnitPatterns {
 			matched, err := service.MatchUnitPatterns([]string{unit}, unitStats)
 			if err != nil {
 				fmt.Printf("CRITICAL: %s: match error: %v\n", unit, err)
-				err = multierr.Append(err, fmt.Errorf("%s: match error: %w", unit, err))
+				//err = multierr.Append(err, fmt.Errorf("%s: match error: %w", unit, err))
 			}
 			if len(matched) == 0 {
 				fmt.Printf("CRITICAL: %s: not present\n", unit)
-				err = multierr.Append(err, fmt.Errorf("%s: not present", unit))
+				//err = multierr.Append(err, fmt.Errorf("%s: not present", unit))
 			}
 		}
 
