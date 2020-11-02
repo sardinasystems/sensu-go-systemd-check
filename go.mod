@@ -14,7 +14,7 @@ require (
 	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/robertkrimen/otto v0.0.0-20200922221731-ef014fd054ac // indirect
-	github.com/sensu-community/sensu-plugin-sdk v0.10.1
+	github.com/sensu-community/sensu-plugin-sdk v0.11.0
 	github.com/sensu/sensu-go/api/core/v2 v2.4.0 // indirect
 	github.com/sensu/sensu-go/types v0.3.0
 	github.com/sirupsen/logrus v1.7.0 // indirect
