@@ -88,7 +88,7 @@ func executeCheck(event *types.Event) (int, error) {
 	}
 	defer conn.Close()
 
-	unitFetcher, err := service.InstrospectForUnitMethods()
+	unitFetcher, err := service.InstrospectForUnitMethods(nil)
 	if err != nil {
 		return sensu.CheckStateUnknown, fmt.Errorf("could not introspect systemd dbus: %w", err)
 	}

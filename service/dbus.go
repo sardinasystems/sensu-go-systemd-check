@@ -28,8 +28,7 @@ import (
 	"strings"
 
 	"github.com/coreos/go-systemd/v22/dbus"
-	dbusRaw "github.com/godbus/dbus"
-	"github.com/pkg/errors"
+	dbusRaw "github.com/godbus/dbus/v5"
 )
 
 type UnitFetcher func(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error)
@@ -37,22 +36,27 @@ type UnitFetcher func(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitSt
 // InstrospectForUnitMethods determines what methods are available via dbus for listing systemd units.
 // We have a number of functions, some better than others, for getting and filtering unit lists.
 // This will attempt to find the most optimal method, and move down to methods that require more work.
-func InstrospectForUnitMethods() (UnitFetcher, error) {
-	//setup a dbus connection
-	conn, err := dbusRaw.SystemBusPrivate()
-	if err != nil {
-		return nil, errors.Wrap(err, "error getting connection to system bus")
+func InstrospectForUnitMethods(conn *dbusRaw.Conn) (UnitFetcher, error) {
+	var err error
+
+	if conn == nil {
+		//setup a dbus connection
+		conn, err = dbusRaw.SystemBusPrivate()
+		if err != nil {
+			return nil, fmt.Errorf("error getting connection to system bus: %w", err)
+		}
 	}
 
 	auth := dbusRaw.AuthExternal(strconv.Itoa(os.Getuid()))
+	//auth := dbusRaw.AuthExternal("0")
 	err = conn.Auth([]dbusRaw.Auth{auth})
 	if err != nil {
-		return nil, errors.Wrap(err, "error authenticating")
+		return nil, fmt.Errorf("authentication error: %w", err)
 	}
 
 	err = conn.Hello()
 	if err != nil {
-		return nil, errors.Wrap(err, "error in Hello")
+		return nil, fmt.Errorf("error in Hello: %w", err)
 	}
 
 	var props string
@@ -61,12 +65,12 @@ func InstrospectForUnitMethods() (UnitFetcher, error) {
 	obj := conn.Object("org.freedesktop.systemd1", dbusRaw.ObjectPath("/org/freedesktop/systemd1"))
 	err = obj.Call("org.freedesktop.DBus.Introspectable.Introspect", 0).Store(&props)
 	if err != nil {
-		return nil, errors.Wrap(err, "error calling dbus")
+		return nil, fmt.Errorf("dbus call error: %w", err)
 	}
 
 	unitMap, err := parseXMLAndReturnMethods(props)
 	if err != nil {
-		return nil, errors.Wrap(err, "error handling XML")
+		return nil, fmt.Errorf("error handling XML: %w", err)
 	}
 
 	//return a function callback ordered by desirability
@@ -100,11 +104,11 @@ func parseXMLAndReturnMethods(str string) (map[string]bool, error) {
 
 	err := xml.Unmarshal([]byte(str), &methods)
 	if err != nil {
-		return nil, errors.Wrap(err, "error unmarshalling XML")
+		return nil, fmt.Errorf("unmarshal XML error: %w", err)
 	}
 
 	if len(methods.Interface) == 0 {
-		return nil, errors.Wrap(err, "no methods found on introspect")
+		return nil, fmt.Errorf("no methods found on introspect: %w", err)
 	}
 	methodMap := make(map[string]bool)
 	for _, iface := range methods.Interface {
@@ -127,7 +131,7 @@ func listUnitsByPatternWrapper(conn *dbus.Conn, states, patterns []string) ([]db
 func listUnitsFilteredWrapper(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error) {
 	units, err := conn.ListUnitsFiltered(states)
 	if err != nil {
-		return nil, errors.Wrap(err, "ListUnitsFiltered error")
+		return nil, fmt.Errorf("ListUnitsFiltered error: %w", err)
 	}
 
 	return MatchUnitPatterns(patterns, units)
@@ -137,12 +141,12 @@ func listUnitsFilteredWrapper(conn *dbus.Conn, states, patterns []string) ([]dbu
 func listUnitsWrapper(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error) {
 	units, err := conn.ListUnits()
 	if err != nil {
-		return nil, errors.Wrap(err, "ListUnits error")
+		return nil, fmt.Errorf("ListUnits error: %w", err)
 	}
 	if len(patterns) > 0 {
 		units, err = MatchUnitPatterns(patterns, units)
 		if err != nil {
-			return nil, errors.Wrap(err, "error matching unit patterns")
+			return nil, fmt.Errorf("matching unit patterns error: %w", err)
 		}
 	}
 
@@ -170,7 +174,7 @@ func MatchUnitPatterns(patterns []string, units []dbus.UnitStatus) ([]dbus.UnitS
 		for _, pattern := range patterns {
 			match, err := filepath.Match(pattern, unit.Name)
 			if err != nil {
-				return nil, errors.Wrapf(err, "error matching with pattern %s", pattern)
+				return nil, fmt.Errorf("matching with pattern %s error: %w", pattern, err)
 			}
 			if match {
 				matchUnits = append(matchUnits, unit)
