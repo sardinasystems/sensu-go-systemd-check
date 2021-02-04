@@ -226,11 +226,16 @@ github.com/sensu/sensu-go/api/core/v2 v2.4.0 h1:7dqtXH8bWP5LZ34sVojez62+78gxrn7G
 github.com/sensu/sensu-go/api/core/v2 v2.4.0/go.mod h1:97IK4ZQuvVjWvvoLkp+NgrD6ot30WDRz3LEbFUc/N34=
 github.com/sensu/sensu-go/api/core/v2 v2.5.0 h1:mKsOYDuOT0AtjUftLk+3H/SIm5C8vJNpsCvfKR9NB+o=
 github.com/sensu/sensu-go/api/core/v2 v2.5.0/go.mod h1:97IK4ZQuvVjWvvoLkp+NgrD6ot30WDRz3LEbFUc/N34=
+github.com/sensu/sensu-go/api/core/v2 v2.6.0 h1:hEKPHFZZNDuWTlKr7Kgm2yog65ZdkBUqNesE5qaWEGo=
+github.com/sensu/sensu-go/api/core/v2 v2.6.0/go.mod h1:97IK4ZQuvVjWvvoLkp+NgrD6ot30WDRz3LEbFUc/N34=
+github.com/sensu/sensu-go/api/core/v3 v3.1.0/go.mod h1:OWGb7stbn1Eo4j6HGkz3CPb3jpdeiOCTGmSVnDe8mNA=
 github.com/sensu/sensu-go/types v0.1.0/go.mod h1:o3tBPy2BUWb3jPvMQ+pBs0CgCyN1vC1/loN4anURxvs=
 github.com/sensu/sensu-go/types v0.3.0 h1:nVplWvduq9ArIu2rz3jMrzdVBFAlkm6T9l45UyhrP1s=
 github.com/sensu/sensu-go/types v0.3.0/go.mod h1:TyeO3h/82XE1KppZRFg+jKB4QYwY2hE5hbCzjnnGdRo=
 github.com/sensu/sensu-go/types v0.4.0 h1:sg3MgRL0Q5dW5P/kMbfohAE9flW6WwUzr6KEH2dx0Zc=
 github.com/sensu/sensu-go/types v0.4.0/go.mod h1:3B68p1lbYoZkiQReo4gADKYb+ApDNcBBw2jf8xXJlM4=
+github.com/sensu/sensu-go/types v0.5.0 h1:kacQ8s1ZlcL3bhsrrrzfXEgjHVxDHPRdhQbH6GQa7sQ=
+github.com/sensu/sensu-go/types v0.5.0/go.mod h1:6fm9bQwqD4TurVso5f2Z78sULQykybn8LyCQ3mv20a4=
 github.com/sensu/sensu-licensing v0.1.2 h1:EEZxvbj/pmCCfD4ePAzs9mb6k6IPRDbUJcwAOfSvuUc=
 github.com/sensu/sensu-licensing v0.1.2/go.mod h1:Xfs4do2c3U+VvuNCjthUH7QJOZ9o6NfbQSb7rrvSXGc=
 github.com/shurcooL/sanitized_anchor_name v1.0.0/go.mod h1:1NzhyTcUVG4SuEtjjoZeVRXNmyL/1OwPU0+IJeTBvfc=
