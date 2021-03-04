@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/coreos/etcd v3.3.25+incompatible // indirect
-	github.com/coreos/go-systemd/v22 v22.1.0
+	github.com/coreos/go-systemd/v22 v22.2.0
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/godbus/dbus/v5 v5.0.3
 	github.com/gogo/protobuf v1.3.2 // indirect
