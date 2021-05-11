@@ -5,7 +5,7 @@ go 1.15
 replace go.etcd.io/etcd => go.etcd.io/etcd v0.0.0-20210226220824-aa7126864d82
 
 require (
-	github.com/coreos/go-systemd/v22 v22.3.1
+	github.com/coreos/go-systemd/v22 v22.3.2
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/godbus/dbus/v5 v5.0.4
 	github.com/gogo/protobuf v1.3.2 // indirect
