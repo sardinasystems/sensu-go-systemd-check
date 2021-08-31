@@ -315,8 +315,8 @@ github.com/sensu/sensu-go/api/core/v3 v3.3.0 h1:260rON3b4DQ1yX2bBH3zR7+9BWkyeV2S
 github.com/sensu/sensu-go/api/core/v3 v3.3.0/go.mod h1:qjzW//KOc1VnVwf3YUdvHFlVsVXBui3IpVNtedCzCPY=
 github.com/sensu/sensu-go/types v0.1.0/go.mod h1:o3tBPy2BUWb3jPvMQ+pBs0CgCyN1vC1/loN4anURxvs=
 github.com/sensu/sensu-go/types v0.3.0/go.mod h1:TyeO3h/82XE1KppZRFg+jKB4QYwY2hE5hbCzjnnGdRo=
-github.com/sensu/sensu-go/types v0.7.0 h1:7GomwRniLiQZesUV8+LwNCzcmrogCaUlV2TPC5y5oIs=
-github.com/sensu/sensu-go/types v0.7.0/go.mod h1:sJmWtMl4fk8YIEiDDhdyFP0PpzWLPyIBSPKJfjBzHeU=
+github.com/sensu/sensu-go/types v0.7.1 h1:NtHTbUJBMsuCjcsWB8yW1Rlz0z4JQb+5vtiNGUKfUUQ=
+github.com/sensu/sensu-go/types v0.7.1/go.mod h1:sJmWtMl4fk8YIEiDDhdyFP0PpzWLPyIBSPKJfjBzHeU=
 github.com/sensu/sensu-licensing v0.1.2 h1:EEZxvbj/pmCCfD4ePAzs9mb6k6IPRDbUJcwAOfSvuUc=
 github.com/sensu/sensu-licensing v0.1.2/go.mod h1:Xfs4do2c3U+VvuNCjthUH7QJOZ9o6NfbQSb7rrvSXGc=
 github.com/sensu/sensu-plugin-sdk v0.14.0 h1:HGeXEVBW0K4mc0fF+2qFaNZKDxHJtPm1scbzcIeROCs=
