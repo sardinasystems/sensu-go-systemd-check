@@ -60,7 +60,7 @@ var (
 )
 
 func main() {
-	check := sensu.NewGoCheck(&plugin.PluginConfig, options, checkArgs, executeCheck, false)
+	check := sensu.NewCheck(&plugin.PluginConfig, options, checkArgs, executeCheck, true)
 	check.Execute()
 }
 
