@@ -83,7 +83,9 @@ func stringsContains(sl []string, s string) bool {
 }
 
 func executeCheck(event *types.Event) (int, error) {
-	conn, err := dbus.New()
+	ctx := context.TODO()
+
+	conn, err := dbus.NewWithContext(ctx)
 	if err != nil {
 		return sensu.CheckStateUnknown, fmt.Errorf("could not connect to systemd dbus: %w", err)
 	}
@@ -94,7 +96,7 @@ func executeCheck(event *types.Event) (int, error) {
 		return sensu.CheckStateUnknown, fmt.Errorf("could not introspect systemd dbus: %w", err)
 	}
 
-	unitStats, err := unitFetcher(context.Background(), conn, nil, plugin.UnitPatterns)
+	unitStats, err := unitFetcher(ctx, conn, nil, plugin.UnitPatterns)
 	if err != nil {
 		return sensu.CheckStateUnknown, fmt.Errorf("list units error: %w", err)
 	}
