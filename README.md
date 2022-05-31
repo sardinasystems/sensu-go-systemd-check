@@ -53,6 +53,7 @@ metadata:
   namespace: default
 spec:
   command: sensu-go-systemd-check --unit dbus.service
+  stdin: true
   subscriptions:
   - system
   runtime_assets:
