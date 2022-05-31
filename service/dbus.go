@@ -15,11 +15,13 @@
 // specific language governing permissions and limitations
 // under the License.
 
-//+build !netbsd
+//go:build !netbsd
+// +build !netbsd
 
 package service
 
 import (
+	"context"
 	"encoding/xml"
 	"fmt"
 	"os"
@@ -31,7 +33,8 @@ import (
 	dbusRaw "github.com/godbus/dbus/v5"
 )
 
-type UnitFetcher func(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error)
+// UnitFetcher a unit retrieval method
+type UnitFetcher func(ctx context.Context, conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error)
 
 // InstrospectForUnitMethods determines what methods are available via dbus for listing systemd units.
 // We have a number of functions, some better than others, for getting and filtering unit lists.
@@ -123,13 +126,13 @@ func parseXMLAndReturnMethods(str string) (map[string]bool, error) {
 }
 
 // listUnitsByPatternWrapper is a bare wrapper for the unitFetcher type
-func listUnitsByPatternWrapper(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error) {
-	return conn.ListUnitsByPatterns(states, patterns)
+func listUnitsByPatternWrapper(ctx context.Context, conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error) {
+	return conn.ListUnitsByPatternsContext(ctx, states, patterns)
 }
 
 //listUnitsFilteredWrapper wraps the dbus ListUnitsFiltered method
-func listUnitsFilteredWrapper(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error) {
-	units, err := conn.ListUnitsFiltered(states)
+func listUnitsFilteredWrapper(ctx context.Context, conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error) {
+	units, err := conn.ListUnitsFilteredContext(ctx, states)
 	if err != nil {
 		return nil, fmt.Errorf("ListUnitsFiltered error: %w", err)
 	}
@@ -138,8 +141,8 @@ func listUnitsFilteredWrapper(conn *dbus.Conn, states, patterns []string) ([]dbu
 }
 
 // listUnitsWrapper wraps the dbus ListUnits method
-func listUnitsWrapper(conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error) {
-	units, err := conn.ListUnits()
+func listUnitsWrapper(ctx context.Context, conn *dbus.Conn, states, patterns []string) ([]dbus.UnitStatus, error) {
+	units, err := conn.ListUnitsContext(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("ListUnits error: %w", err)
 	}

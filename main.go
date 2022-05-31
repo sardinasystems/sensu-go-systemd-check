@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/coreos/go-systemd/v22/dbus"
@@ -28,8 +29,8 @@ var (
 		},
 	}
 
-	options = []*sensu.PluginConfigOption{
-		{
+	options = []sensu.ConfigOption{
+		&sensu.SlicePluginConfigOption[string]{
 			Path:      "unit",
 			Env:       "SYSTEMD_UNIT",
 			Argument:  "unit",
@@ -37,7 +38,7 @@ var (
 			Usage:     "Systemd unit(s) pattern to check",
 			Value:     &plugin.UnitPatterns,
 		},
-		{
+		&sensu.SlicePluginConfigOption[string]{
 			Path:      "active_state",
 			Env:       "SYSTEMD_ACTIVE_STATE",
 			Argument:  "active",
@@ -46,7 +47,7 @@ var (
 			Value:     &plugin.ExpectedActiveStates,
 			Default:   []string{"active"},
 		},
-		{
+		&sensu.SlicePluginConfigOption[string]{
 			Path:      "sub_state",
 			Env:       "SYSTEMD_SUB_STATE",
 			Argument:  "sub",
@@ -93,7 +94,7 @@ func executeCheck(event *types.Event) (int, error) {
 		return sensu.CheckStateUnknown, fmt.Errorf("could not introspect systemd dbus: %w", err)
 	}
 
-	unitStats, err := unitFetcher(conn, nil, plugin.UnitPatterns)
+	unitStats, err := unitFetcher(context.Background(), conn, nil, plugin.UnitPatterns)
 	if err != nil {
 		return sensu.CheckStateUnknown, fmt.Errorf("list units error: %w", err)
 	}
