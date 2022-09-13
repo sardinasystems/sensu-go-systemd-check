@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/coreos/go-systemd/v22 v22.3.2
 	github.com/godbus/dbus/v5 v5.1.0
-	github.com/sensu/sensu-go/types v0.10.0
+	github.com/sensu/sensu-go/types v0.11.0
 	github.com/sensu/sensu-plugin-sdk v0.16.0
 	go.uber.org/multierr v1.8.0
 )
