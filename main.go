@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/coreos/go-systemd/v22/dbus"
-	"github.com/sensu/sensu-go/types"
+	corev2 "github.com/sensu/sensu-go/api/core/v2"
 	"github.com/sensu/sensu-plugin-sdk/sensu"
 	"go.uber.org/multierr"
 
@@ -60,11 +62,23 @@ var (
 )
 
 func main() {
-	check := sensu.NewCheck(&plugin.PluginConfig, options, checkArgs, executeCheck, true)
+	useStdin := false
+	fi, err := os.Stdin.Stat()
+	if err != nil {
+		fmt.Printf("Error check stdin: %v\n", err)
+		panic(err)
+	}
+	//Check the Mode bitmask for Named Pipe to indicate stdin is connected
+	if fi.Mode()&os.ModeNamedPipe != 0 {
+		log.Println("using stdin")
+		useStdin = true
+	}
+
+	check := sensu.NewGoCheck(&plugin.PluginConfig, options, checkArgs, executeCheck, useStdin)
 	check.Execute()
 }
 
-func checkArgs(event *types.Event) (int, error) {
+func checkArgs(event *corev2.Event) (int, error) {
 	if len(plugin.UnitPatterns) == 0 {
 		return sensu.CheckStateWarning, fmt.Errorf("--unit or SYSTEMD_UNIT environment variable is required")
 	}
@@ -82,7 +96,7 @@ func stringsContains(sl []string, s string) bool {
 	return false
 }
 
-func executeCheck(event *types.Event) (int, error) {
+func executeCheck(event *corev2.Event) (int, error) {
 	ctx := context.TODO()
 
 	conn, err := dbus.NewWithContext(ctx)
