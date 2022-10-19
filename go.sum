@@ -199,8 +199,8 @@ github.com/rogpeppe/go-internal v1.6.1 h1:/FiVV8dS/e+YqF2JvO3yXRFbBLTIuSDkuC7aBO
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
 github.com/sensu/sensu-go/api/core/v2 v2.0.0/go.mod h1:L+ZZ+QzsGTrNldiAdVrrQI/WIo31cq43YnEFt9T/6Pg=
 github.com/sensu/sensu-go/api/core/v2 v2.14.0/go.mod h1:XCgUjY78ApTahizBz/pkc5KU17L/E5BexeZHkGDdTls=
-github.com/sensu/sensu-go/api/core/v2 v2.15.0 h1:TdH4Iq2OfpVqoY3yVXpUVe2lMmC0Ksp9Dq3wpIELXRM=
-github.com/sensu/sensu-go/api/core/v2 v2.15.0/go.mod h1:QxGKxqQv4rpweFrR4Jkp1tas3amGzAy0wO0fUwq0suU=
+github.com/sensu/sensu-go/api/core/v2 v2.16.0 h1:HOq4rFkQ1S5ZjxmMTLc5J5mAbECrnKWvtXXbMqr3j9s=
+github.com/sensu/sensu-go/api/core/v2 v2.16.0/go.mod h1:MjM7+MCGEyTAgaZ589SiGHwYiaYF7N/58dU0J070u/0=
 github.com/sensu/sensu-go/api/core/v3 v3.6.1/go.mod h1:aqNOkJxkrwRq+rPW47XtVWeb5Rk1K5adlCZGBW9nsvM=
 github.com/sensu/sensu-go/api/core/v3 v3.6.2 h1:NEkHcPxkaYwPlH4gG6kgvdvYLlwBBaswMHscA7X3V+4=
 github.com/sensu/sensu-go/api/core/v3 v3.6.2/go.mod h1:aqNOkJxkrwRq+rPW47XtVWeb5Rk1K5adlCZGBW9nsvM=
