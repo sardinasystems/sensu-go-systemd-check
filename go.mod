@@ -3,7 +3,7 @@ module github.com/sardinasystems/sensu-go-systemd-check
 go 1.18
 
 require (
-	github.com/coreos/go-systemd/v22 v22.4.0
+	github.com/coreos/go-systemd/v22 v22.5.0
 	github.com/godbus/dbus/v5 v5.1.0
 	github.com/sensu/sensu-go/api/core/v2 v2.16.0
 	github.com/sensu/sensu-plugin-sdk v0.16.0
