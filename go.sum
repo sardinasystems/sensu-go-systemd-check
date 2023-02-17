@@ -177,8 +177,8 @@ github.com/robfig/cron/v3 v3.0.1/go.mod h1:eQICP3HwyT7UooqI/z+Ov+PtYAWygg1TEWWzG
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/rogpeppe/go-internal v1.6.1 h1:/FiVV8dS/e+YqF2JvO3yXRFbBLTIuSDkuC7aBOAvL+k=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
-github.com/sensu/core/v2 v2.16.1 h1:lYicLM1PXq5Zwj5h7akXMFXvWcja12qMLzKsJr3qM4Q=
-github.com/sensu/core/v2 v2.16.1/go.mod h1:2etWGsa+nx5G2Q3CKiSJY9kSg8VhCgGzgp1VyxbC6U8=
+github.com/sensu/core/v2 v2.17.0 h1:f8apafxkAqvnFTOMnlTFdFbDrmuW9/MC5lgvgC8UmWs=
+github.com/sensu/core/v2 v2.17.0/go.mod h1:2etWGsa+nx5G2Q3CKiSJY9kSg8VhCgGzgp1VyxbC6U8=
 github.com/sensu/sensu-api-tools v0.1.0 h1:ctEyFIY1aKis1KqL7wOo+Apg/5t9X6vBVLzrqUUuBkQ=
 github.com/sensu/sensu-api-tools v0.1.0/go.mod h1:SNISS4OhwNSZI9/YKTQr1bghOEwed9ZT4v+ztKk1Mq0=
 github.com/sensu/sensu-go/types v0.12.0 h1:t8gupS1QhkuA/b9LzTaF0h6DBGHX2UzKHyuBPhj/PoA=
