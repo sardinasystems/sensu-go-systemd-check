@@ -7,7 +7,7 @@ require (
 	github.com/godbus/dbus/v5 v5.1.0
 	github.com/sensu/core/v2 v2.18.0
 	github.com/sensu/sensu-plugin-sdk v0.18.0
-	go.uber.org/multierr v1.10.0
+	go.uber.org/multierr v1.11.0
 )
 
 require (
