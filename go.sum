@@ -62,8 +62,8 @@ github.com/sensu/sensu-api-tools v0.2.1/go.mod h1:SNISS4OhwNSZI9/YKTQr1bghOEwed9
 github.com/sensu/sensu-go/types v0.12.0 h1:t8gupS1QhkuA/b9LzTaF0h6DBGHX2UzKHyuBPhj/PoA=
 github.com/sensu/sensu-licensing/v2 v2.2.1 h1:9JI4iVm4ujWN4etI/Kdper6Q2lOn3HIEaGe234N8j40=
 github.com/sensu/sensu-licensing/v2 v2.2.1/go.mod h1:53lwddwN4XwZUld5KtnWQduSH6F8rBOsWuEk2EUeooI=
-github.com/sensu/sensu-plugin-sdk v0.18.0 h1:aR5N9SsqRm1NqiJo7k8GeLEPwGQIfeY4bbePPByUdnI=
-github.com/sensu/sensu-plugin-sdk v0.18.0/go.mod h1:NCcvkFZka5Az4Z+l9greCQQdEzTfilO4+JoURmELCa4=
+github.com/sensu/sensu-plugin-sdk v0.19.0 h1:5r8f/+b0EY2YlNHyNYIY2pYz77JgGHvutFNCjReqMJE=
+github.com/sensu/sensu-plugin-sdk v0.19.0/go.mod h1:O5fDSIQkoFf/G3HqhzBj1uOVo5UlJ8o4IDVBcPx+DVU=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/sourcegraph/conc v0.3.0 h1:OQTbbt6P72L20UqAkXXuLOj79LfEanQ+YQFNpLA9ySo=
