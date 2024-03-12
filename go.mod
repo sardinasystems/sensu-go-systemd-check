@@ -1,6 +1,6 @@
 module github.com/sardinasystems/sensu-go-systemd-check
 
-go 1.18
+go 1.22
 
 require (
 	github.com/coreos/go-systemd/v22 v22.5.0
