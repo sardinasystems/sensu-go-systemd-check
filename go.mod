@@ -2,8 +2,6 @@ module github.com/sardinasystems/sensu-go-systemd-check
 
 go 1.22.7
 
-toolchain go1.23.1
-
 require (
 	github.com/coreos/go-systemd/v22 v22.5.0
 	github.com/godbus/dbus/v5 v5.1.0
